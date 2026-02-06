@@ -53,28 +53,14 @@ function wp_email_capture_checkIfPresent($email)
  */
 function wp_email_capture_admin_notice()
 {
-
-	/* Check Tracking First */
-	if (!get_option('wpec_set_tracking') && current_user_can('activate_plugins')) {
-		echo '<div class="updated">';
-		echo '<h4>';
-		_e('Allow Tracking?', 'wp-email-capture');
-		echo '</h4>';
-		echo '<p>';
-		_e('Thank you for installing WP Email Capture. Please help us improve by allowing us to gather anonymous usage stats such as themes and plugins used on your site, to help us test.', 'wp-email-capture');
-		echo '</p>';
-		printf(__('<p><a href="%1$s" class="button-primary">Allow Tracking</a> <a href="%2$s" class="button-secondary">Do Not Allow Tracking</a></p>', 'wp-email-capture'), '?wp_email_capture_tracking=1', '?wp_email_capture_tracking=2');
-		echo '</div>';
-	} else {
-		global $current_user;
-		$user_id = $current_user->ID;
-		/* Check that the user hasn't already clicked to ignore the message */
-		if (!get_user_meta($user_id, 'wp_email_capture_setup_ignore')) {
-			if (get_option('wp_email_capture_signup') == "" || get_option('wp_email_capture_redirection') == "") {
-				echo '<div class="error"><p>';
-				printf(__('<strong>Please Note: </strong> You have not created a subscription page, confirmation page or both in WP Email Capture, please go to the WP Email Capture Settings Page to add them. | <a href="%1$s">Hide Notice</a>'), '?wp_email_capture_setup_ignore=0');
-				echo "</p></div>";
-			}
+	global $current_user;
+	$user_id = $current_user->ID;
+	/* Check that the user hasn't already clicked to ignore the message */
+	if (!get_user_meta($user_id, 'wp_email_capture_setup_ignore')) {
+		if (get_option('wp_email_capture_signup') == "" || get_option('wp_email_capture_redirection') == "") {
+			echo '<div class="error"><p>';
+			printf(__('<strong>Please Note: </strong> You have not created a subscription page, confirmation page or both in WP Email Capture, please go to the WP Email Capture Settings Page to add them. | <a href="%1$s">Hide Notice</a>', 'wp-email-capture'), '?wp_email_capture_setup_ignore=0');
+			echo "</p></div>";
 		}
 	}
 }
@@ -127,10 +113,6 @@ function wp_email_capture_nag_ignore()
 
 	if (isset($_GET['wp_email_capture_upsell_ignore']) && '0' == $_GET['wp_email_capture_upsell_ignore']) {
 		update_user_meta($user_id, 'wp_email_capture_upsell_ignore', 'true', true);
-	}
-
-	if (isset($_GET['wp_email_capture_tracking'])) {
-		update_option('wpec_set_tracking', $_GET['wp_email_capture_tracking']);
 	}
 }
 

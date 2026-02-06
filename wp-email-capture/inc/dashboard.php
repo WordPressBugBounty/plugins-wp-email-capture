@@ -8,10 +8,13 @@ function wp_email_capture_dashboard_widget() {
 
 	wp_email_capture_writetable( 3, '<strong>' . __( 'Last Three Members To Join', 'wp-email-capture' ) . '</strong><br/><br/>' );
 
+	$nonce = wp_create_nonce( 'wp-email-capture-export-nonce' );
+
 	echo '<br/><br/><a name="list"></a><strong>' . __( 'Export', 'wp-email-capture' ) . '</strong>';
 	echo '<form name="wp_email_capture_export" action="' . esc_url( $_SERVER['REQUEST_URI'] ) . '#list" method="post">';
 	echo '<label>' . __( 'Use the button below to export your list as a CSV to use in software such as', 'wp-email-capture' ) . ' <a href="https://www.wpemailcapture.com/recommends/aweber/" title="Email Marketing">Aweber</a>.</label>';
 	echo '<input type="hidden" name="wp_email_capture_export" />';
+	echo '<input type="hidden" name="wp_email_capture_export_nonce" value="' . esc_attr( $nonce ) . '"/>';
 	echo '<div class="submit"><input type="submit" value="' . __( 'Export List', 'wp-email-capture') . '" class="button" /></div>';
 	echo '</form><br/><br/>';
 

@@ -562,11 +562,14 @@ function wp_email_capture_free_options()
 
 	wp_email_capture_writetable();
 
+	$nonce = wp_create_nonce( 'wp-email-capture-export-nonce' );
+
 	echo '<a name="list"></a><h3>' . __('Export', 'wp-email-capture') . '</h3>
 				<form name="wp_email_capture_export" action="' . esc_url($_SERVER['REQUEST_URI']) . '#list" method="post">
 
 					<label>' . __('Use the button below to export your list as a CSV to use in software such as <a href="https://www.wpemailcapture.com/recommends/aweber" title="Email Marketing">Aweber</a> or <a href="https://www.wpemailcapture.com/recommends/constant-contact/">Constant Contact</a>', 'wp-email-capture') . '</label>
 					<input type="hidden" name="wp_email_capture_export" />
+					<input type="hidden" name="wp_email_capture_export_nonce" value="' . esc_attr( $nonce ) . '"/>
 					<div class="submit">
 						<input type="submit" value="' . __('Export List', 'wp-email-capture') . '" class="button"  />
 					</div>
@@ -654,7 +657,13 @@ function wp_email_capture_options_process()
 
 		if (is_user_logged_in() ) {
 			if ( current_user_can('administrator') ) {
-				wp_email_capture_export();
+
+				$verify = wp_verify_nonce( $_REQUEST['wp_email_capture_export_nonce'], 'wp-email-capture-export-nonce' );
+				if ( $verify ) {
+					wp_email_capture_export();
+				} else {
+					wp_die( "Unable to download, security check failed." );
+				}
 			} else {
 				wp_die( "Admin's Only Please" );
 			}
