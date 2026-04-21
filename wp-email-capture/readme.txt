@@ -1,9 +1,9 @@
 === Email Marketing Plugin - WP Email Capture ===
 Tags: email marketing, email, mailing list, widget ready, gutenberg ready, gdpr
 Requires at least: 5.0
-Tested up to: 6.9
-Version: 3.12.6
-Stable tag: 3.12.6
+Tested up to: 7.0
+Version: 3.12.7
+Stable tag: 3.12.7
 Contributors: rhyswynne
 Donate link: https://www.wpemailcapture.com/premium/?utm_source=donatelink&utm_medium=wordpressorgreadme&utm_campaign=wpemailcapture
 
@@ -158,10 +158,13 @@ This plugin does use widgets, so probably yes :)
 Wherever you put in %NAME% (spelt exactly like that, uppercase as well), it will be replaced with the name given by the user.
 
 = Where do I report security bugs found in this plugin? =
-
-Please report security bugs found in the source code of the undefined plugin through the [Patchstack Vulnerability Disclosure  Program](https://patchstack.com/database/vdp/9e5fba50-5fe1-4128-9641-d4d8f398cb19). The Patchstack team will assist you with verification, CVE assignment, and notify the developers of this plugin.
+Please report security bugs found in the source code of the WordPress Email Marketing Plugin – WP Email Capture plugin through the [Patchstack Vulnerability Disclosure Program](https://patchstack.com/database/vdp/9e5fba50-5fe1-4128-9641-d4d8f398cb19). The Patchstack team will assist you with verification, CVE assignment, and notify the developers of this plugin.
 
 == Change Log ==
+= 3.12.7 = 
+* Fixed a display bug that occurred in WordPress 6.9.1 onwards that threw a warning if the Gutenberg block was being registered.
+* Tested with 7.0
+
 = 3.12.6 =
 * Security Release - fixed a Cross Site Request Forgery (CSRF) security bug that would have allowed logged in administrators to download CSV's in a way they shouldn't be able to.
 
